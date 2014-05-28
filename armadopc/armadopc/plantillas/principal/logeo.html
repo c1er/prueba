@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% block contenido %}
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$("#login").submit(function(event) {
+			var info=$(this).serializeObject()
+			$.ajax({
+				url: '/auth/logeo/',
+				type: 'POST',
+				data: info,
+			})
+			.done(function(html) {
+				renderizar(html)
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+			return false;
+		});	
+	});
+</script>
+<table class="table"> <center><h2> LOGIN </h2></center>
+    <div>
+	    <div class="container">
+		    <div class="row">
+			    <div class="col-md-1">
+                    <div>										<form action="" method="post" id="login" role="form" class="horizontal">
+		                  {% csrf_token %}
+		                    <div class="form-group">
+			                 {{form.as_p}}		
+		                    </div>
+		                    <center><input type="submit" value="Enviar"/></center>
+	                        
+	                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</table>
+</script>
+{% endblock %}
